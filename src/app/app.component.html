@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <style>
+        ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 11%;
+        background-color: #f1f1f1;
+        position: fixed;
+        height: auto;
+        overflow: auto;
+        }
+
+        li a {
+        display: block;
+        color: #000;
+        padding: 8px 16px;
+        text-decoration: none;
+        }
+
+        li a.active {
+        background-color: #7bcacb;
+        color: rgb(198, 198, 198);
+        }
+
+        li a:hover:not(.active) {
+        background-color: #555;
+        color: white;
+        }
+
+        table {
+        table-layout: fixed;
+        width: 100%;  
+        border-collapse: collapse;
+        border: 1px solid black;
+        } 
+
+        th,td {
+        border: 1px solid black;
+        padding-left: 10px; 
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row" position="fixed">
+            <div class="col-md-12">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a class="navbar-brand">{{title}}</a>
+                </nav>
+
+                <ul>
+                    <li><a (click)="science()">Science</a></li>
+                    <li><a (click)="math()" >Math</a></li>
+                    <li><a (click)="fiction()">Fiction</a></li>
+                    <li><a (click)="love()">Love</a></li>
+                    <li><a (click)="war()">War</a></li>
+                </ul>
+            </div>
+
+            <div style="margin-left:12%; padding:1px 16px;height:50px;">
+                    <form>
+                        <div>
+                          <input #input type="search" placeholder="Search by Title or Author" size="30"/>
+                          <button (click)="search(input.value)">Search</button>
+                        </div>
+                    </form>
+                <br>
+                <table border>        
+                    <div *ngIf="condition; then thenBlock else elseBlock"></div>
+                    <ng-template #thenBlock>
+                        <tr>
+                            <th>Title and Sub Title</th>
+                            <th>Author</th>
+                            <th>Latest Publish Year</th>
+                            <th>First Publish Year</th>
+                        </tr>
+                        <tbody>
+                            <tr *ngFor="let book of books; let i=index;">
+                                <td>{{book.title}}</td>
+                                <td>{{book.author_name}}</td>
+                                <td>{{book.publish_year}}</td>
+                                <td>{{book.first_publish_year}}</td>
+                            </tr>
+                        </tbody>
+
+                    </ng-template>
+                    
+                    <ng-template #elseBlock>
+                        <tr>
+                            <th>Title and Sub Title</th>
+                            <th>Author</th>
+                            <th>First Publish Year</th>
+                        </tr>
+                        <tbody>
+                            <tr *ngFor="let book of books; let i=index;">
+                                <td>{{book.title}} {{book.subtitle}}</td>
+                                <td><ng-container *ngFor="let author of toArray(book.authors); let j=index">
+                                    <ng-container *ngIf="j < 1">
+                                        {{author.name}}
+                                    </ng-container>
+                                </ng-container></td>
+                                <td>{{book.first_publish_year}}</td>
+                            </tr>
+                        </tbody>
+                    </ng-template>
+
+                </table>
+                <hr>
+            <div class="d-flex justify-content-between">
+                <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshData()">
+                </ngb-pagination>
+                           
+                <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshData()">
+                  <option [ngValue]="10">10 items per page</option>
+                  <option [ngValue]="15">15 items per page</option>
+                  <option [ngValue]="20">20 items per page</option>
+                  <option [ngValue]="30">30 items per page</option>
+                  <option [ngValue]="50">50 items per page</option>
+                </select>                
+            </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
