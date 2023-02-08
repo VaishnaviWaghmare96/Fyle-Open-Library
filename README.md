@@ -12,7 +12,7 @@
 
 •	E-book library system app includes :Book :- Docs, works, Title, Author, title_suggest, subtitle, publish_date, publish_year, publish_place, publisher, language,author_name, subject
 
-Most front-end applications need to communicate with a server over the HTTP protocol, to download or upload data and access other back-end services. Angular provides a client HTTP API for Angular applications, the HttpClient service class in @angular/common/http.                                     
+•	Most front-end applications need to communicate with a server over the HTTP protocol, to download or upload data and access other back-end services. Angular provides a client HTTP API for Angular applications, the HttpClient service class in @angular/common/http.                                     
 
 
 # Usage-
